@@ -136,8 +136,15 @@ body {
     margin-left: 30%;
    }
 
+footer{
+  margin-top: 20%;
+}
+
    .contact{
     /* set default styling as bootstrap */
      padding: 10px;
-     
+     background-color: black;
+     font-size: 0.5rem;
+     color: white;
+     /* margin-top: 20%; */
    }
