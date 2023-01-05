@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- add favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- bootstrap 5 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="home.css">
+    <title>OLJ</title>
+</head>
+
+<body>
+    <!-- Add the Bootstrap CSS file to your HTML code -->
+
+    <!-- Home page -->
+    <h1 class="text-center title">One-Line Journal</h1>
+    <h1 class="text-center subtitle">Time is running <span id="running-time"></span></h1>
+
+    <div class="container mt-5">
+        <!-- Display the current date -->
+        <h2 class="text-center"><span id="current-date"></span></h2>
+        <!-- Add a form for the one-line journal entry -->
+        <form id="journal-form">
+            <div class="form-group">
+                <label for="journal-entry">Today, I:</label>
+                <input type="text" class="form-control" id="journal-entry" name="journal-entry">
+            </div>
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+
+    </div>
+
+    <div class="row btn-group" role="group">
+        <!-- Add a button to download the journal entries as a CSV file -->
+        <!-- <div class="col-6"> -->
+            <button type="button" id="download-button" class="btn btn-warning">Download as CSV</button>
+            <!-- </div> -->
+        <!-- button to show previous enteries -->
+        <!-- <div class="col-6"> -->
+            <button type="button" id="previous-entries-button" class="btn btn-success">View Previous Entries</button>
+            <!-- </div> -->
+    </div>
+    <!-- Add a container element to display the previous journal entries -->
+    <div id="previous-entries-container"></div>
+
+    <!-- Add a script to display the current date and handle the journal entry form -->
+    <script>
+        // Display the current date
+        var currentDate = new Date();
+        document.getElementById("current-date").innerHTML = currentDate.toDateString();
+        document.getElementById("journal-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            // Get the current date
+            var currentDate = new Date();
+            //only day's data in the currentDate variable
+            currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+            // Check if there is already a journal entry for today
+            if (localStorage.getItem("journal-entry-" + currentDate.toISOString())) {
+                alert("You can only make one journal entry per day");
+                return;
+            }
+            // Get the journal entry from the form
+            var journalEntry = document.getElementById("journal-entry").value;
+            // Save the journal entry to local storage
+            localStorage.setItem("journal-entry-" + currentDate.toISOString(), journalEntry);
+            // Clear the form
+            document.getElementById("journal-form").reset();
+        });
+        // Add an event listener for the journal entry form
+        document.getElementById("journal-form").addEventListener("submit", function (event) {
+            event.preventDefault();
+            // Get the journal entry from the form
+            var journalEntry = document.getElementById("journal-entry").value;
+            // Save the journal entry to local storage
+            localStorage.setItem("journal-entry-" + currentDate.toISOString(), journalEntry);
+            // Clear the form
+            document.getElementById("journal-form").reset();
+        });
+        // Add an event listener for the download button
+        document.getElementById("download-button").addEventListener("click", function () {
+            // Create a CSV file with the journal entries
+            var csv = "Date,Journal Entry\n";
+            for (var i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                if (key.startsWith("journal-entry-")) {
+                    var value = localStorage.getItem(key);
+                    csv += key.replace("journal-entry-", "") + "," + value + "\n";
+                }
+            }
+            // Download the CSV file
+            var downloadLink = document.createElement("a");
+            downloadLink.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
+            downloadLink.download = "one-line-journal.csv";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        });
+
+        // Add a function to display the previous journal entries
+        document.getElementById("previous-entries-button").addEventListener("click", function () {
+            document.getElementById("previous-entries-button").style.display = "none";
+
+            // If the previous entries container is already displayed, hide it
+            if (document.getElementById("previous-entries-container").style.display === "block") {
+                document.getElementById("previous-entries-container").style.display = "none";
+                return;
+            }
+            // Get the journal entries from local storage
+            var entries = [];
+            for (var i = 0; i < localStorage.length; i++) {
+                var key = localStorage.key(i);
+                if (key.startsWith("journal-entry-")) {
+                    var value = localStorage.getItem(key);
+                    var date = key.replace("journal-entry-", "");
+                    // only day's data in the date variable
+                    date = new Date(date).toDateString();
+
+                    entries.push({ date: date, entry: value });
+                }
+            }
+            // Sort the journal entries by date
+            entries.sort(function (a, b) {
+                return a.date > b.date ? 1 : -1;
+            });
+            // Display the journal entries in a list
+            var list = document.createElement("ul");
+            for (var i = 0; i < entries.length; i++) {
+                var item = document.createElement("li");
+                item.innerHTML = entries[i].date + ": " + entries[i].entry;
+                list.appendChild(item);
+            }
+            document.body.appendChild(list);
+        });
+        // Update the running time every second
+        setInterval(function () {
+            var currentTime = new Date();
+            <!-- currentTime = new Date( currentTime.getDate(),currentTime.getSeconds()); -->
+
+            //it prints time as :17:50:26 GMT+0530 (India Standard Time)
+            // I want to print only time as 17:50:26 
+            // can be done using regex
+            let time = currentTime.toTimeString();
+            let timeArray = time.split(" ");
+            let timeArray2 = timeArray[0].split(":");
+            let timeArray3 = timeArray2[0] + ":" + timeArray2[1] + ":" + timeArray2[2];
+            document.getElementById("running-time").innerHTML = timeArray3;
+
+
+        }, 1000);
+
+
+
+    </script>
+
+
+</body>
+
+</html>
