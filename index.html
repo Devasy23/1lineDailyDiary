@@ -18,20 +18,21 @@
     <!-- Add the Bootstrap CSS file to your HTML code -->
 
     <!-- Home page -->
-    <h1 class="text-center title">One-Line Journal</h1>
+    <h1 class="title">One-Line Journal</h1>
     <h1 class="text-center subtitle">Time is running <span id="running-time"></span></h1>
 
     <div class="container mt-5">
         <!-- Display the current date -->
         <h2 class="text-center"><span id="current-date"></span></h2>
         <!-- Add a form for the one-line journal entry -->
-        <form id="journal-form">
+        <form id="journal-form" >
             <div class="form-group">
-                <label for="journal-entry">What did I do today to be a better person? or What challenges did I face today and how did I overcome them:</label>
+                <label for="floatingname">What did I do today to be a better person? or What challenges did I face today and how did I overcome them:</label>
                 <input type="text" class="form-control" id="journal-entry" name="journal-entry">
             </div>
+            
             <div class="text-center">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" id="savebutton"  class="btn btn-primary">Save</button>
             </div>
         </form>
 
@@ -158,8 +159,8 @@
 
 
     </script>
-    <footer class="bg-dark py-4 mt-4 text-center text-white">
-        <a href="contact.html" class="btn contact">Contact Me</a>
+    <footer class="bg-dark py-4 mt-4 text-center text-white footer" id="ftt">
+        <a href="contact.html" class="contact">Contact Me</a>
     </footer>
 
 
