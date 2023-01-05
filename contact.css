@@ -1,0 +1,47 @@
+/* Set the font and background color */
+body {
+    font-family: sans-serif;
+    background-color: lightgrey;
+  }
+  
+  /* Style the form element */
+  form {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+  }
+  
+  /* Style the input and textarea elements */
+  input, textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid black;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+    resize: vertical;
+  }
+  
+  /* Style the label elements */
+  label {
+    font-size: 18px;
+  }
+  
+  /* Style the submit button */
+  input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  /* Add a hover effect to the submit button */
+  input[type="submit"]:hover {
+    background-color: #45a049;
+  }  

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Contact Me</title>
+    <!-- link bootstrap5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="contact.css"> -->
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h1 class="text-center mb-5">Contact Me</h1>
+      <p class="text-center">If you have any questions or would like to get in touch, please fill out the form below and I will get back to you as soon as possible.</p>
+      <form method="POST" action="https://formspree.io/f/xrgvglgw" class="needs-validation form-group col-6 mx-auto px-0" novalidate>
+        <div class="form-group form-floating mb-3">
+            <input type="text" class="form-control" id="name" name="name" placeholder="John Smith" required>
+            <label for="floatingname">Name</label>
+          <div class="invalid-feedback">Please enter your name.</div>
+        </div>
+        <div class="form-group form-floating">
+            <input type="email" class="form-control mb-3" id="email" name="email" placeholder="john.smith@abc.com" required>
+            <label for="email">Email</label>
+          <div class="invalid-feedback">Please enter a valid email address.</div>
+        </div>
+        <div class="form-group form-floating">
+            <textarea class="form-control mb-3" id="message" name="message" placeholder="I wanted to thank you !!" required></textarea>
+            <label class="form-label float-left" for="message">Message</label>
+          <div class="invalid-feedback">Please enter a message.</div>
+          <button type="submit" class="btn btn-primary mt-3">Send</button>
+        </form>
+      </div>
+  
+      <!-- Add form validation script -->
+      <script>
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+          'use strict';
+          window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+              form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+              }, false);
+            });
+          }, false);
+        })();
+      </script>
+    </body>
+  </html>
+  
